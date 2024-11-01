@@ -11,21 +11,17 @@
 //themes
 var theme_settings = [
 	{
-		strokeColor: '#ccc',
-		biscuitColor: '#EE9B33',
-		pillColor: '#EE9B33',
-		gateColor: '#5386F1',
-		user: ['assets/item_theme4_user.png'],
+		strokeColor: '#2C3E50', // Dark crypto chart background color
+		biscuitColor: '#00FF00', // Green candle points
+		pillColor: '#FFD700', // Golden LOL token
+		gateColor: '#FF4136', // Red gates
+		user: ['assets/item_theme4_user.png'], // Keep original image for now until new asset
 		ghosts: [
-			'assets/item_theme2_monster1.png',
+			'assets/item_theme2_monster1.png', // Keep original ghosts until new assets
 			'assets/item_theme2_monster2.png',
 			'assets/item_theme2_monster3.png',
-			'assets/item_theme2_monster1.png',
-			'assets/item_theme2_monster1.png',
-			'assets/item_theme2_monster1.png',
-			'assets/item_theme2_monster2.png',
 		],
-		collection: ['assets/item_piggybank.png'],
+		collection: ['assets/item_piggybank.png'], // Keep original for now
 	},
 	{
 		strokeColor: '#359C9C',
@@ -141,10 +137,10 @@ var mapSettings = {
 	collectShowTimer: 15000, //collection show timer
 	lives: 3,
 	score: {
-		biscuit: 10,
-		pill: 50,
-		ghost: 50,
-		collection: 100,
+		biscuit: 10, // Keep original value
+		pill: 50, // Keep original value
+		ghost: 50, // Keep original value
+		collection: 100, // Keep original value
 	},
 	loop: {
 		//map loop settings
@@ -206,20 +202,20 @@ var mapSettings = {
 
 //game text display
 var textDisplay = {
-	gameReady: 'GET READY!',
-	gameReadyLevel: 'LEVEL [NUMBER]',
-	gameCountdown: ['1', '2', '3'],
-	gameOver: 'GAME OVER',
-	gameClear: 'LEVEL CLEAR',
-	gameScore: 'SCORE : [NUMBER]PTS',
-	gameLevel: 'LEVEL : [NUMBER]',
-	multiplayerName: 'P[NUMBER] : ',
-	multiplayerIndicator: 'P[NUMBER]',
-	exitTitle: 'Exit Game',
-	exitMessage: 'Are you sure you want\nto quit game?',
-	share: 'Share your score:',
-	resultTitle: 'GAME OVER',
-	resultDesc: '[NUMBER]PTS',
+	gameReady: 'READY TO TRADE! 📈',
+	gameReadyLevel: 'MARKET LEVEL [NUMBER]',
+	gameCountdown: ['3', '2', '1'], // Keep simple countdown
+	gameOver: 'REKT! 📉',
+	gameClear: 'TO THE MOON! 🌕',
+	gameScore: 'PORTFOLIO: $[NUMBER]',
+	gameLevel: 'MARKET LEVEL: [NUMBER]',
+	multiplayerName: 'TRADER [NUMBER]: ',
+	multiplayerIndicator: 'T[NUMBER]',
+	exitTitle: 'Exit Trading',
+	exitMessage: 'Are you sure you want\nto exit trading?',
+	share: 'Share your gains:',
+	resultTitle: 'TRADING SESSION OVER',
+	resultDesc: 'FINAL PORTFOLIO: $[NUMBER]',
 };
 
 //Social share, [SCORE] will replace with game score
@@ -3256,6 +3252,8 @@ function togglePillTimer(con) {
 
 		gameData.ghostBlink = false;
 		timeData.pillDate = new Date();
+		showGameStatus('DIAMOND HANDS ACTIVATED! 💎🙌');
+		playSound('soundEatPill'); // Use existing sound until rocket is added
 	} else {
 		for (var n = 0; n < gameData.ghosts.length; n++) {
 			var thisGhost = gameData.ghosts[n];
@@ -3266,6 +3264,7 @@ function togglePillTimer(con) {
 			}
 		}
 		toggleGameSound('normal');
+		showGameStatus('');
 	}
 	timeData.pillEnable = con;
 }
@@ -3986,10 +3985,9 @@ function capitalizeFirstLetter(string) {
  */
 function endGame() {
 	stopGame();
-
 	toggleGameSound('');
-	playSound('soundDead');
-	showGameStatus('over');
+	playSound('soundDead'); // Use existing sound until rugpull is added
+	showGameStatus('LIQUIDATED! 📉');
 
 	if (!$.editor.enable) {
 		TweenMax.to(gameContainer, 2, {
