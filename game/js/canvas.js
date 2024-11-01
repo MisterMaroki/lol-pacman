@@ -528,7 +528,7 @@ function changeCanvasViewport() {
 			resultDescTxt.y = (canvasH / 100) * 42;
 
 			//exit
-			itemExit.visible = true;
+			itemExit.visible = false;
 			itemExitP.visible = false;
 
 			buttonConfirm.x = canvasW / 2 - 110;
@@ -585,7 +585,7 @@ function changeCanvasViewport() {
 
 			//result
 			itemResult.visible = false;
-			itemResultP.visible = true;
+			itemResultP.visible = false;
 
 			buttonFacebook.x = (canvasW / 100) * 39;
 			buttonFacebook.y = (canvasH / 100) * 54;
@@ -608,7 +608,7 @@ function changeCanvasViewport() {
 
 			//exit
 			itemExit.visible = false;
-			itemExitP.visible = true;
+			itemExitP.visible = false;
 
 			buttonConfirm.x = canvasW / 2 - 110;
 			buttonConfirm.y = (canvasH / 100) * 64;
@@ -720,6 +720,7 @@ function removeGameCanvas() {
  */
 function tick(event) {
 	updateGame();
+
 	stage.update(event);
 }
 

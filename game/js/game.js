@@ -2604,28 +2604,23 @@ function movePacman(player) {
 	player.position = npos;
 	nextWhole = getPacman(player.position, player.direction);
 	if (isMap(nextWhole.x, nextWhole.y)) {
-		block = getBlock(nextWhole);
+		var currentBlock = getBlock(nextWhole);
 
 		if (!player.invisible) {
-			if (block === mapType.biscuit || block === mapType.pill) {
+			if (currentBlock === mapType.biscuit || currentBlock === mapType.pill) {
 				setBlock(nextWhole, mapType.empty);
 				drawIcons();
 
-				addScore(
-					block === mapType.biscuit
+				const points =
+					currentBlock === mapType.biscuit
 						? mapSettings.score.biscuit
-						: mapSettings.score.pill,
-					player.index
-				);
-				gameData.eaten += 1;
+						: mapSettings.score.pill;
 
-				if (gameData.eaten === gameData.totalEaten) {
-					showGameStage('clear');
-				}
+				addScore(points, player.index);
 
-				if (block === mapType.biscuit) {
+				if (currentBlock === mapType.biscuit) {
 					playSound('soundEat');
-				} else if (block === mapType.pill) {
+				} else if (currentBlock === mapType.pill) {
 					toggleGameSound('pill');
 					playSound('soundEatPill');
 					togglePillTimer(true);
@@ -2638,12 +2633,12 @@ function movePacman(player) {
 						}
 					}
 				}
-			} else if (mapType.collection.indexOf(block) != -1) {
+			} else if (mapType.collection.indexOf(currentBlock) != -1) {
 				playSound('soundCollect');
 				setBlock(nextWhole, mapType.empty);
 				drawIcons();
 
-				var collectionIndex = mapType.collection.indexOf(block);
+				var collectionIndex = mapType.collection.indexOf(currentBlock);
 				gameData.collected.push(collectionIndex);
 				addScore(mapSettings.score.collection, player.index);
 			}
@@ -3986,8 +3981,12 @@ function capitalizeFirstLetter(string) {
 function endGame() {
 	stopGame();
 	toggleGameSound('');
-	playSound('soundDead'); // Use existing sound until rugpull is added
+	playSound('soundDead');
 	showGameStatus('LIQUIDATED! 📉');
+
+	// Show REKT message
+	gameStatusTxt.text = textDisplay.gameOver;
+	gameStatusTxt.visible = true;
 
 	if (!$.editor.enable) {
 		TweenMax.to(gameContainer, 2, {
