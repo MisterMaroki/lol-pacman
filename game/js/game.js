@@ -397,7 +397,12 @@ function buildGameButton() {
 				checkQuickGameMode();
 			}
 		} else {
-			goPage('select');
+			// Skip selection and go straight to game with first map/theme
+			gameData.gameIndex = 0;
+			gameData.mapNum = 0;
+			gameData.themeNum = 0;
+			gameData.mapLoopSide = randomBoolean();
+			goPage('game');
 		}
 	});
 
@@ -781,30 +786,37 @@ function goPage(page) {
 			break;
 
 		case 'select':
-			targetContainer = selectContainer;
-			mapContainer.visible = true;
+			// targetContainer = selectContainer;
+			// mapContainer.visible = true;
 
-			buttonSelect.visible = true;
-			buttonLeft.visible = buttonRight.visible = true;
-			buttonLeftSmall.visible = buttonRightSmall.visible = true;
+			// buttonSelect.visible = true;
+			// buttonLeft.visible = buttonRight.visible = true;
+			// buttonLeftSmall.visible = buttonRightSmall.visible = true;
 
-			if (
-				typeof initSocket == 'function' &&
-				multiplayerSettings.enable &&
-				socketData.online
-			) {
-				if (!socketData.host) {
-					buttonSelect.visible = false;
-					buttonLeft.visible = buttonRight.visible = false;
-					buttonLeftSmall.visible = buttonRightSmall.visible = false;
-				}
-			} else {
-				gameData.gameIndex = 0;
-				gameData.mapLoopSide = randomBoolean();
-			}
+			// if (
+			// 	typeof initSocket == 'function' &&
+			// 	multiplayerSettings.enable &&
+			// 	socketData.online
+			// ) {
+			// 	if (!socketData.host) {
+			// 		buttonSelect.visible = false;
+			// 		buttonLeft.visible = buttonRight.visible = false;
+			// 		buttonLeftSmall.visible = buttonRightSmall.visible = false;
+			// 	}
+			// } else {
+			// 	gameData.gameIndex = 0;
+			// 	gameData.mapLoopSide = randomBoolean();
+			// }
 
-			prepareGame();
-			break;
+			// prepareGame();
+			// break;
+			// Skip selection screen and go directly to game
+			gameData.gameIndex = 0;
+			gameData.mapNum = 0; // Force first map
+			gameData.themeNum = 0; // Force first theme
+			gameData.mapLoopSide = randomBoolean();
+			goPage('game');
+			return;
 
 		case 'game':
 			targetContainer = gameContainer;
